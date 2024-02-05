@@ -2,11 +2,14 @@ require('dotenv').config()
 
 const express = require('express')
 const { connectDB } = require('./src/config/db')
+const nationalParksRoutes = require('./src/api/routes/NP')
 
 const app = express()
 connectDB()
 
 app.use(express.json())
+
+app.use('/api/v1/nationalParks', nationalParksRoutes)
 
 app.use('/ping', (req, res, next) => {
   return res.status(200).json('pong')
@@ -17,5 +20,5 @@ app.use('*', (req, res, next) => {
 })
 
 app.listen(3000, () => {
-  console.log('http:localhost:3000')
+  console.log('http://localhost:3000')
 })
