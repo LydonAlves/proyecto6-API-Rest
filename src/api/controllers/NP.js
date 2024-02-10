@@ -44,7 +44,10 @@ const updateNP = async (req, res, next) => {
     const newNP = new NPark(req.body)
     newNP._id = id
     const update = await NPark.findByIdAndUpdate(id, newNP, { new: true })
-    return res.status(200).json(up)
+    if (!update) {
+      return res.status(404).json({ message: 'NPark not found' })
+    }
+    return res.status(200).json(update)
   } catch (error) {
     return res.status(400).json('Error')
   }
